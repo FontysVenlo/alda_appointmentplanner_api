@@ -1,2 +1,0 @@
-# ALDA Appointmentplanner API
-
