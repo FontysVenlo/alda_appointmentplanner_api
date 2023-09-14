@@ -9,5 +9,16 @@ package appointmentplanner.api;
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public enum Priority {
-    LOW, MEDIUM, HIGH
+    /**
+     * Low priority
+     */
+    LOW,
+    /**
+     * Medium priority
+     */
+    MEDIUM,
+    /**
+     * High priority
+     */
+    HIGH
 }

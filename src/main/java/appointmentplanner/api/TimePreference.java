@@ -24,5 +24,13 @@ public enum TimePreference {
      * 
      * In case no time preference is specified, this is the default.
      */
-    UNSPECIFIED
+    UNSPECIFIED,
+    /**
+     * Latest before a given time (the whole appointment should fit before the given time).
+     */
+    LATEST_BEFORE,
+    /**
+     * Earliest after a given time (the appointment can also start at the given time).
+     */
+    EARLIEST_AFTER;
 }
