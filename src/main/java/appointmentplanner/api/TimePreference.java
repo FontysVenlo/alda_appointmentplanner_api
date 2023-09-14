@@ -24,13 +24,5 @@ public enum TimePreference {
      * 
      * In case no time preference is specified, this is the default.
      */
-    UNSPECIFIED,
-    /**
-     * Latest before a given time.
-     */
-    LATEST_BEFORE, 
-    /**
-     * Earliest after a given time.
-     */
-    EARLIEST_AFTER;
+    UNSPECIFIED
 }
