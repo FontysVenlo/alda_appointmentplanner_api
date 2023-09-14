@@ -17,5 +17,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn site
+      - name: Make sure that the API can compile
+        run: mvn compile
+      - name: Download latest alda checkstyle
+        run: curl https://raw.githubusercontent.com/FontysVenlo/alda_checkstyle/main/alda_checks.xml -o alda_checks.xml
+      - name: Check JavaDoc
+        run: mvn checkstyle:check -Dcheckstyle.config.location=alda_checks.xml
