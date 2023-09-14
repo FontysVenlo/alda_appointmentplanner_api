@@ -4,21 +4,21 @@
 package appointmentplanner.api;
 
 /**
- * Priority of appointments.
+ * Priority of appointments (not used as part of scheduling).
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public enum Priority {
     /**
-     * Low priority
+     * Low priority.
      */
     LOW,
     /**
-     * Medium priority
+     * Medium priority.
      */
     MEDIUM,
     /**
-     * High priority
+     * High priority.
      */
     HIGH
 }
