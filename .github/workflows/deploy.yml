@@ -26,6 +26,8 @@ jobs:
         run: echo "TAG_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Make sure that the versions match
         run: '[[ "v$POM_VERSION" == "$TAG_VERSION" ]] && exit 0 || exit 1'
+      - name: Install
+        run: mvn install
       - name: Generate JavaDoc
         run: mvn javadoc:javadoc
       - name: Publish package to maven central
