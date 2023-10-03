@@ -44,6 +44,7 @@ public interface AbstractAPFactory {
      * @param duration of the appointment
      * @param priority of the appointment
      * @return AppointmentData object.
+     * @throws NullPointerException if any of the parameters are null
      */
     AppointmentData createAppointmentData( String description,
             Duration duration,
@@ -57,6 +58,7 @@ public interface AbstractAPFactory {
      * @param description of the appointment
      * @param duration of the appointment
      * @return Appointment object.
+     * @throws NullPointerException if any of the parameters are null
      */
     default AppointmentData createAppointmentData( String description, Duration duration ) {
         return createAppointmentData( description, duration, Priority.LOW );
