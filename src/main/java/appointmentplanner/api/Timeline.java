@@ -65,17 +65,19 @@ public interface Timeline {
      * an empty optional is returned.
      * 
      * Appointments aren't allowed to overlap.
-     * 
+     *
+     * Not all time preferences make sense without a fixed time. If the time preference is not equal to LATEST then
+     * the time preference is set to EARLIEST.
      *
      * @param forDay time partition to fit appointment
      * @param appointment the appointment to add
-     * @param timepreference or null if not applicable.
+     * @param timePreference fallback strategy, if not LATEST, than set it to EARLIEST for all other preferences
      * @return Appointment instance with all fields set according to
      * AppointmentData, or empty Optional if the constraints of this day and the requested
      * appointment can't be met.
      * @throws NullPointerException If the appointmentData is null
      */
-    Optional<Appointment> addAppointment( LocalDay forDay, AppointmentData appointment, TimePreference timepreference );
+    Optional<Appointment> addAppointment( LocalDay forDay, AppointmentData appointment, TimePreference timePreference );
 
     /**
      * Add appointment with a fixed time. If the requested slot is available,
