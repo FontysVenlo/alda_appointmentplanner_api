@@ -11,6 +11,17 @@ import java.time.LocalTime;
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface AbstractAPFactory {
+    
+    /**
+     * Return the teacher test parts to test. 
+     * The teacher tests are divided in 7 parts. By default, all parts are tested.
+     * Override this method with a sub selection in order to execute only a part of
+     * the teacher tests.
+     * @return 
+     */
+    default String teacherTestsToExecute(){
+        return "P1|P2|P3|P4|P5|P6|P7";
+    }
 
     /**
      * Factory method to create a day plan instance.
