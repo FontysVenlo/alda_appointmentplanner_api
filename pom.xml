@@ -6,11 +6,11 @@
     <parent>
         <groupId>io.github.fontysvenlo</groupId>
         <artifactId>informaticspom</artifactId>
-        <version>1.2</version>
+        <version>1.3.3</version>
     </parent>
     <groupId>io.github.fontysvenlo.alda</groupId>
     <artifactId>appointmentplanner_api</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
     <name>ALDA AppointmentPlanner API</name>
     <properties>

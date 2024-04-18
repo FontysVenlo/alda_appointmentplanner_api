@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * The implementation of the Timeline MUST use YOUR OWN linked list
  * implementation for its internal structure. Existing implementations or
  * arrays/lists are not allowed.
- * 
+ *
  * However, in the methods returning lists, collections, etc. produced by
  * streams, the usual java classes of such kind are allowed. No need to reinvent
  * all wheels.
@@ -37,6 +37,16 @@ public interface Timeline {
     int getNrOfAppointments();
 
     /**
+     * Get the number of gaps between start and en of day and between the
+     * appointments. The standard day has 4 gaps, form 8:30 to 9:00, from 10:00
+     * to 10:30, from 11:00 to 11:10 and from 15:00 to 16:00 An empty day has 1
+     * gap, duration the whole time between day start and day end.
+     *
+     * @return number of gaps between appointments and before and after.
+     */
+    int nrOfGaps();
+
+    /**
      * Get the start of this timeline as instant.
      *
      * @return the start time of this timeline
@@ -52,7 +62,7 @@ public interface Timeline {
 
     /**
      * Add a new appointment to this day.
-     * 
+     *
      * Requirements:
      *
      * An appointment can only be added between start time (including) and
@@ -60,10 +70,10 @@ public interface Timeline {
      *
      * AppointmentData having a duration greater than the length of the day in
      * minutes will result in an empty Optional to be returned.
-     * 
+     *
      * If the day does not have free space to accommodate the appointment,
      * an empty optional is returned.
-     * 
+     *
      * Appointments aren't allowed to overlap.
      *
      * Not all time preferences make sense without a fixed time. If the time preference is not equal to LATEST then
@@ -170,7 +180,7 @@ public interface Timeline {
      */
     boolean contains( Appointment appointment );
 
-    
+
     /**
      * This method finds all time gaps that can accommodate an appointment of
      * the given duration in natural order.

@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
  *
  * A LocalDayPlan has two local time boundaries for allowed times, start time
  * and end time, which default to 0:00 (inclusive) and 24:00 exclusive.
- * 
+ *
  * The implementer should implement a toString that shows all appointments based
  * on local time. It is left to the discretion of the implementer to also show
  * the gaps.
@@ -234,7 +234,7 @@ public interface LocalDayPlan {
     /**
      * What is the (start) date of this plan.
      *
-     * @return the date according to this LocalDayPlan's time zone 
+     * @return the date according to this LocalDayPlan's time zone
      */
     default LocalDate getDate() {
         return getDay().getDate();
@@ -259,4 +259,5 @@ public interface LocalDayPlan {
     default Instant at( int hour, int minute ) {
         return getDay().at( hour, minute );
     }
+
 }
