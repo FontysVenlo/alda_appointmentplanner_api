@@ -34,7 +34,7 @@ public interface Timeline {
      *
      * @return Number of appointments on this timeline.
      */
-    int getNrOfAppointments();
+    int nrOfAppointments();
 
     /**
      * Get the number of gaps between start and en of day and between the
@@ -161,7 +161,7 @@ public interface Timeline {
      *
      * @return list of all appointments.
      */
-    default List<Appointment> getAppointments() {
+    default List<Appointment> appointments() {
         return appointmentStream().collect( Collectors.toList() );
     }
 
@@ -188,7 +188,7 @@ public interface Timeline {
      * @param duration the requested duration for an appointment
      * @return a list of gaps in which the appointment can be scheduled.
      */
-    List<TimeSlot> getGapsFitting( Duration duration );
+    List<TimeSlot> gapsFitting( Duration duration );
 
     /**
      * Check if an appointment of the given duration can be scheduled.
@@ -205,7 +205,7 @@ public interface Timeline {
      * @param duration the requested duration for an appointment
      * @return a list of start times on which an appointment can be scheduled
      */
-    List<TimeSlot> getGapsFittingReversed( Duration duration );
+    List<TimeSlot> gapsFittingReversed( Duration duration );
 
     /**
      * Get the gaps matching the given duration, smallest fitting first.
@@ -213,7 +213,7 @@ public interface Timeline {
      * @param duration required
      * @return list of all gaps fitting, ordered, smallest gap first.
      */
-    List<TimeSlot> getGapsFittingSmallestFirst( Duration duration );
+    List<TimeSlot> gapsFittingSmallestFirst( Duration duration );
 
     /**
      * Get the gaps matching the given duration, largest fitting first.
@@ -221,7 +221,7 @@ public interface Timeline {
      * @param duration required
      * @return list of all gaps fitting, ordered, largest gap first.
      */
-    List<TimeSlot> getGapsFittingLargestFirst( Duration duration );
+    List<TimeSlot> gapsFittingLargestFirst( Duration duration );
 
     /**
      * Find matching free time slots in this and other TimeLines. To facilitate
@@ -231,5 +231,5 @@ public interface Timeline {
      * @param other day plans
      * @return the list of free slots that all DayPlans share.
      */
-    List<TimeSlot> getMatchingFreeSlotsOfDuration( Duration minLength, List<Timeline> other );
+    List<TimeSlot> matchingFreeSlotsOfDuration( Duration minLength, List<Timeline> other );
 }

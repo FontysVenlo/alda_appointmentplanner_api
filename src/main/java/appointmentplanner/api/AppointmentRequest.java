@@ -30,7 +30,8 @@ import java.time.LocalTime;
  */
 public interface AppointmentRequest extends AppointmentData {
 
-    //TODO Specify how to deal with TimePreferences EARLIEST_AFTER and LATEST_BEFORE together with startTime null
+    // TODO Specify how to deal with TimePreferences EARLIEST_AFTER and LATEST_BEFORE
+    // in combination with startTime null
 
 
     /**
@@ -63,7 +64,7 @@ public interface AppointmentRequest extends AppointmentData {
      *
      * @return the time preference
      */
-    default TimePreference getTimePreference() {
+    default TimePreference timePreference() {
         return TimePreference.UNSPECIFIED;
     }
 
