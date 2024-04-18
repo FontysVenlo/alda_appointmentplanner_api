@@ -11,10 +11,7 @@ import java.util.Objects;
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
-public class LocalDay {
-
-    private final ZoneId zone;
-    private final LocalDate date;
+public record LocalDay(ZoneId zone, LocalDate date) {
 
     /**
      * Create a local day in the given timezone at the given date.
@@ -22,9 +19,9 @@ public class LocalDay {
      * @param zone the timezone to use
      * @param date the LocalDate to use
      */
-    public LocalDay( ZoneId zone, LocalDate date ) {
-        this.zone = zone;
-        this.date = date;
+    public LocalDay  {
+        Objects.requireNonNull( zone, "zone must not be null" );
+        Objects.requireNonNull( date, "date must not be null" );
     }
 
     /**
@@ -32,23 +29,6 @@ public class LocalDay {
      */
     public LocalDay() {
         this( ZoneId.systemDefault(), LocalDate.now() );
-    }
-
-    /**
-     * Get the date.
-     * @return the date
-     */
-    public LocalDate getDate() {
-        return date;
-    }
-
-    /**
-     * Get the timezone identifier.
-     *
-     * @return timezone identifier
-     */
-    public ZoneId getZone() {
-        return zone;
     }
 
     /**
@@ -111,34 +91,4 @@ public class LocalDay {
         return new LocalDay();
     }
 
-    @Override
-    public String toString() {
-        return "LocalDay{" + "zone=" + zone + ", date=" + date + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode( this.zone );
-        hash = 73 * hash + Objects.hashCode( this.date );
-        return hash;
-    }
-
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( obj == null ) {
-            return false;
-        }
-        if ( getClass() != obj.getClass() ) {
-            return false;
-        }
-        final LocalDay other = (LocalDay) obj;
-        if ( !Objects.equals( this.zone, other.zone ) ) {
-            return false;
-        }
-        return Objects.equals( this.date, other.date );
-    }
 }
