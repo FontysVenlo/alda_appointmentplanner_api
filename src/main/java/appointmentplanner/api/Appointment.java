@@ -3,6 +3,8 @@
  */
 package appointmentplanner.api;
 
+import java.time.Duration;
+
 /**
  * Appointment that is scheduled using the appointment planner.
  *
@@ -26,21 +28,21 @@ public interface Appointment extends TimeSlot, AppointmentData {
      * @return Priority.
      */
     @Override
-    Priority getPriority();
+    Priority priority();
 
     /**
      * Get the appointment data for this appointment.
      *
      * @return the data
      */
-    AppointmentData getAppointmentData();
+    AppointmentData appointmentData();
 
     /**
      * Get the request that led to this appointment.
      *
      * @return the request.
      */
-    AppointmentRequest getRequest();
+    AppointmentRequest request();
 
     /**
      * Override the default toString. toString() returns startTime, endTime,
@@ -68,4 +70,14 @@ public interface Appointment extends TimeSlot, AppointmentData {
      */
     @Override
     public int hashCode();
+
+    /**
+     * Resolves diamond problem. Git the TimeSlot implementation preference.
+     *
+     * @return the duration of the time slot.
+     */
+    @Override
+    default Duration duration() {
+        return TimeSlot.super.duration();
+    }
 }

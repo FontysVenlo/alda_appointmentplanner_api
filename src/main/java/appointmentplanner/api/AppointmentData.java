@@ -21,21 +21,21 @@ public interface AppointmentData {
      *
      * @return the duration of the appointment.
      */
-    Duration getDuration();
+    Duration duration();
 
     /**
      * The description of the appointment.
      *
      * @return non-empty string describing the appointment.
      */
-    String getDescription();
+    String description();
 
     /**
      * Get the priority for the appointment.
      *
      * @return the priority
      */
-    Priority getPriority();
+    Priority priority();
 
     /**
      * Get the textual representation of AppointmentData. Contains description,

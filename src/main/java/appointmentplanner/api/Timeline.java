@@ -110,8 +110,8 @@ public interface Timeline {
      */
     default Optional<Appointment> addAppointment( LocalDay forDay,
             AppointmentRequest appointmentRequest ) {
-        return addAppointment( forDay, appointmentRequest.getAppointmentData(),
-                appointmentRequest.getStartTime() );
+        return addAppointment( forDay, appointmentRequest.appointmentData(),
+                appointmentRequest.startTime() );
     }
 
     /**
