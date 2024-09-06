@@ -28,7 +28,7 @@ import java.time.LocalTime;
  * @author Pieter van den Hombergh
  * @author Richard van den Ham
  */
-public interface AppointmentRequest extends AppointmentData {
+public interface AppointmentRequest {
     
     //TODO Specify how to deal with TimePreferences EARLIEST_AFTER and LATEST_BEFORE together with startTime null
     
@@ -71,7 +71,6 @@ public interface AppointmentRequest extends AppointmentData {
      * Get the duration of the appointment request.
      * @return the duration of the request
      */
-    @Override
     default Duration getDuration() {
         return getAppointmentData().getDuration();
     }

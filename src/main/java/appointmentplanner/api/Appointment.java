@@ -18,22 +18,7 @@ package appointmentplanner.api;
  * @author Richard van den Ham {@code r.vandenham@fontys.nl}
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
-public interface Appointment extends TimeSlot, AppointmentData {
-
-    /**
-     * Get the priority of this appointment.
-     *
-     * @return Priority.
-     */
-    @Override
-    Priority getPriority();
-
-    /**
-     * Get the appointment data for this appointment.
-     *
-     * @return the data
-     */
-    AppointmentData getAppointmentData();
+public interface Appointment extends TimeSlot {
 
     /**
      * Get the request that led to this appointment.
