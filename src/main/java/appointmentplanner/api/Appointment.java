@@ -28,8 +28,8 @@ public interface Appointment extends TimeSlot {
     AppointmentRequest request();
 
     /**
-     * Override the default toString. toString() returns startTime, endTime,
-     * description and priority like: "2020-09-12 14:00 - 15:55 ALDA Lesson"
+     * Override the default toString. toString() returns startTime, endTime and description
+     * like: "2020-09-12 14:00 - 15:55 ALDA Lesson"
      * This will make your testing and debugging life so much easier.
      *
      * @return String representation of Appointment.

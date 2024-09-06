@@ -9,7 +9,7 @@ import java.time.Duration;
  * taking 45 minutes.
  *
  * Another example is having a treatment at a dentist or a beauty parlor. The
- * duration, priority, and description are known, but there is no time or date
+ * duration and description are known, but there is no time or date
  * allocated yet.
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
@@ -31,8 +31,7 @@ public interface AppointmentData {
     String description();
 
     /**
-     * Get the textual representation of AppointmentData. Contains description,
-     * duration and priority.
+     * Get the textual representation of AppointmentData. Contains description and duration.
      *
      * @return AppointmentData text.
      */
