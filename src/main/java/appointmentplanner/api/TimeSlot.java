@@ -51,7 +51,7 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @return the duration as Duration
      */
     default Duration duration() {
-        return Duration.between( getStart(), getEnd() );
+        return Duration.between(getStart(), getEnd());
     }
 
     /**
@@ -61,8 +61,8 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @return comparison result, less than 0, 0 or greater 0.
      */
     @Override
-    public default int compareTo( TimeSlot other ) {
-        return this.duration().compareTo( other.duration() );
+    public default int compareTo(TimeSlot other) {
+        return this.duration().compareTo(other.duration());
     }
 
     /**
@@ -72,8 +72,8 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @return true if start and end are sufficiently apart to fit the given
      *         duration.
      */
-    default boolean fits( Duration duration ) {
-        return this.duration().compareTo( duration ) >= 0;
+    default boolean fits(Duration duration) {
+        return this.duration().compareTo(duration) >= 0;
     }
 
     /**
@@ -83,9 +83,9 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @return true if other does not start earlier nor ends earlier than this
      *         time slot.
      */
-    default boolean fits( TimeSlot other ) {
-        return this.getStart().compareTo( other.getStart() ) <= 0
-                && this.getEnd().compareTo( other.getEnd() ) >= 0;
+    default boolean fits(TimeSlot other) {
+        return this.getStart().compareTo(other.getStart()) <= 0
+                && this.getEnd().compareTo(other.getEnd()) >= 0;
     }
 
     /**
@@ -94,8 +94,8 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @param day for the time
      * @return end Time.
      */
-    default LocalTime getEndTime( LocalDay day ) {
-        return day.timeOfInstant( getEnd() );
+    default LocalTime getEndTime(LocalDay day) {
+        return day.timeOfInstant(getEnd());
     }
 
     /**
@@ -104,8 +104,8 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @param day for the time
      * @return start Time
      */
-    default LocalTime getStartTime( LocalDay day ) {
-        return day.timeOfInstant( getStart() );
+    default LocalTime getStartTime(LocalDay day) {
+        return day.timeOfInstant(getStart());
     }
 
     /**
@@ -114,8 +114,8 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @param day provides time zone
      * @return the date on which the TimeSlot starts.
      */
-    default LocalDate getStartDate( LocalDay day ) {
-        return day.dateOfInstant( getStart() );
+    default LocalDate getStartDate(LocalDay day) {
+        return day.dateOfInstant(getStart());
     }
 
     /**
@@ -124,7 +124,7 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @param day provides time zone
      * @return the date on which the TimeSlot ends.
      */
-    default LocalDate getEndDate( LocalDay day ) {
-        return day.dateOfInstant( getEnd() );
+    default LocalDate getEndDate(LocalDay day) {
+        return day.dateOfInstant(getEnd());
     }
 }

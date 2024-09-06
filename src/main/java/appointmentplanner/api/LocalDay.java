@@ -22,7 +22,7 @@ public class LocalDay {
      * @param zone the timezone to use
      * @param date the LocalDate to use
      */
-    public LocalDay( ZoneId zone, LocalDate date ) {
+    public LocalDay(ZoneId zone, LocalDate date) {
         this.zone = zone;
         this.date = date;
     }
@@ -31,7 +31,7 @@ public class LocalDay {
      * Create a LocalDay based on the system default timezone and the current date.
      */
     public LocalDay() {
-        this( ZoneId.systemDefault(), LocalDate.now() );
+        this(ZoneId.systemDefault(), LocalDate.now());
     }
 
     /**
@@ -57,8 +57,8 @@ public class LocalDay {
      * @param localTime the local time
      * @return the time as an instant at this date and timezone
      */
-    public Instant ofLocalTime( LocalTime localTime ) {
-        return localTime.atDate( date ).atZone( zone ).toInstant();
+    public Instant ofLocalTime(LocalTime localTime) {
+        return localTime.atDate(date).atZone(zone).toInstant();
     }
 
     /**
@@ -67,8 +67,8 @@ public class LocalDay {
      * @param instant to convert to LocalTime
      * @return the LocalTime of the given instant
      */
-    public LocalTime timeOfInstant( Instant instant ) {
-        return instant.atZone( zone ).toLocalTime();
+    public LocalTime timeOfInstant(Instant instant) {
+        return instant.atZone(zone).toLocalTime();
     }
 
     /**
@@ -77,8 +77,8 @@ public class LocalDay {
      * @param instant to convert to LocalDate
      * @return the LocalDate of the given instant
      */
-    public LocalDate dateOfInstant( Instant instant ) {
-        return instant.atZone( zone ).toLocalDate();
+    public LocalDate dateOfInstant(Instant instant) {
+        return instant.atZone(zone).toLocalDate();
     }
 
     /**
@@ -87,8 +87,8 @@ public class LocalDay {
      * @param days to add
      * @return the new LocalDay shifted forward or backward in time.
      */
-    public LocalDay plusDays( int days ) {
-        return new LocalDay( zone, date.plusDays( days ) );
+    public LocalDay plusDays(int days) {
+        return new LocalDay(zone, date.plusDays(days));
     }
 
     /**
@@ -98,8 +98,8 @@ public class LocalDay {
      * @param m the minutes
      * @return Instant at the given ours and minutes
      */
-    public Instant at( int hm, int m ) {
-        return ofLocalTime( LocalTime.of( hm, m, 0 ) );
+    public Instant at(int hm, int m) {
+        return ofLocalTime(LocalTime.of(hm, m, 0));
     }
 
     /**
@@ -119,26 +119,26 @@ public class LocalDay {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 73 * hash + Objects.hashCode( this.zone );
-        hash = 73 * hash + Objects.hashCode( this.date );
+        hash = 73 * hash + Objects.hashCode(this.zone);
+        hash = 73 * hash + Objects.hashCode(this.date);
         return hash;
     }
 
     @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if ( obj == null ) {
+        if (obj == null) {
             return false;
         }
-        if ( getClass() != obj.getClass() ) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         final LocalDay other = (LocalDay) obj;
-        if ( !Objects.equals( this.zone, other.zone ) ) {
+        if (!Objects.equals(this.zone, other.zone)) {
             return false;
         }
-        return Objects.equals( this.date, other.date );
+        return Objects.equals(this.date, other.date);
     }
 }

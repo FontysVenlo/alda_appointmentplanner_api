@@ -39,8 +39,8 @@ public interface AppointmentRequest extends AppointmentData {
      * @param onDay the LocalDay the time is on.
      * @return the start time as instant, potentially null.
      */
-    default Instant getStart( LocalDay onDay ) {
-        return onDay.ofLocalTime( getStartTime() );
+    default Instant getStart(LocalDay onDay) {
+        return onDay.ofLocalTime(getStartTime());
     }
 
     /**
@@ -82,7 +82,7 @@ public interface AppointmentRequest extends AppointmentData {
      * @return true if the two appointments are equal
      */
     @Override
-    public boolean equals( Object obj );
+    public boolean equals(Object obj);
     
     /**
      * Calculate a hash code value for the object.

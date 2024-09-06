@@ -20,8 +20,8 @@ public interface AbstractAPFactory {
      * @param endTime no appointments end after this time
      * @return LocalDayPlan object.
      */
-    default LocalDayPlan createLocalDayPlan( LocalDay day, LocalTime startTime, LocalTime endTime ) {
-        return createLocalDayPlan( day, day.ofLocalTime( startTime ), day.ofLocalTime( endTime ) );
+    default LocalDayPlan createLocalDayPlan(LocalDay day, LocalTime startTime, LocalTime endTime) {
+        return createLocalDayPlan(day, day.ofLocalTime(startTime), day.ofLocalTime(endTime));
     }
 
     /**
@@ -32,7 +32,7 @@ public interface AbstractAPFactory {
      * @param end no appointments end after this time
      * @return LocalDayPlan object.
      */
-    LocalDayPlan createLocalDayPlan( LocalDay day, Instant start, Instant end );
+    LocalDayPlan createLocalDayPlan(LocalDay day, Instant start, Instant end);
 
 
     /**
@@ -46,9 +46,9 @@ public interface AbstractAPFactory {
      * @return AppointmentData object.
      * @throws NullPointerException if any of the parameters are null
      */
-    AppointmentData createAppointmentData( String description,
+    AppointmentData createAppointmentData(String description,
             Duration duration,
-            Priority priority );
+            Priority priority);
 
     /**
      * Factory method to create an AppointmentData object without specified
@@ -60,8 +60,8 @@ public interface AbstractAPFactory {
      * @return Appointment object.
      * @throws NullPointerException if any of the parameters are null
      */
-    default AppointmentData createAppointmentData( String description, Duration duration ) {
-        return createAppointmentData( description, duration, Priority.LOW );
+    default AppointmentData createAppointmentData(String description, Duration duration) {
+        return createAppointmentData(description, duration, Priority.LOW);
     }
 
     /**
@@ -71,8 +71,8 @@ public interface AbstractAPFactory {
      * @param startTime time of the request
      * @return the request.
      */
-    default AppointmentRequest createAppointmentRequest( AppointmentData data, LocalTime startTime ) {
-        return createAppointmentRequest( data, startTime, TimePreference.UNSPECIFIED );
+    default AppointmentRequest createAppointmentRequest(AppointmentData data, LocalTime startTime) {
+        return createAppointmentRequest(data, startTime, TimePreference.UNSPECIFIED);
     }
 
     /**
@@ -82,8 +82,8 @@ public interface AbstractAPFactory {
      * @param preference for time, early or late
      * @return the request
      */
-    default AppointmentRequest createAppointmentRequest( AppointmentData appData, TimePreference preference ) {
-        return createAppointmentRequest( appData, null, preference );
+    default AppointmentRequest createAppointmentRequest(AppointmentData appData, TimePreference preference) {
+        return createAppointmentRequest(appData, null, preference);
     }
 
     /**
@@ -95,9 +95,9 @@ public interface AbstractAPFactory {
      * @param fallBack when time not available, use fallback TimePreference
      * @return the request
      */
-    AppointmentRequest createAppointmentRequest( AppointmentData appointmentData,
+    AppointmentRequest createAppointmentRequest(AppointmentData appointmentData,
                                                  LocalTime preferredStart,
-                                                 TimePreference fallBack );
+                                                 TimePreference fallBack);
 
     /**
      * Create a time slot between two times.
@@ -106,7 +106,7 @@ public interface AbstractAPFactory {
      * @param end date+time
      * @return the time slot
      */
-    TimeSlot between( Instant start, Instant end );
+    TimeSlot between(Instant start, Instant end);
 
     /**
      * Compute time slot on a date between given start- and endTime.
@@ -119,10 +119,10 @@ public interface AbstractAPFactory {
      * @param endTime end time
      * @return the timeslot
      */
-    default TimeSlot between( LocalDay day, LocalTime startTime, LocalTime endTime ) {
+    default TimeSlot between(LocalDay day, LocalTime startTime, LocalTime endTime) {
         boolean endBeforeOrAtStart = !endTime.isAfter(startTime);
-        Instant start = day.ofLocalTime( startTime );
-        Instant end = (endBeforeOrAtStart) ? day.plusDays( 1 ).ofLocalTime( endTime ) : day.ofLocalTime( endTime );
-        return between( start, end );
+        Instant start = day.ofLocalTime(startTime);
+        Instant end = (endBeforeOrAtStart) ? day.plusDays(1).ofLocalTime(endTime) : day.ofLocalTime(endTime);
+        return between(start, end);
     }
 }
