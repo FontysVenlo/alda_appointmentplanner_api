@@ -31,13 +31,6 @@ public interface AppointmentData {
     String description();
 
     /**
-     * Get the priority for the appointment.
-     *
-     * @return the priority
-     */
-    Priority priority();
-
-    /**
      * Get the textual representation of AppointmentData. Contains description,
      * duration and priority.
      *

@@ -37,32 +37,16 @@ public interface AbstractAPFactory {
 
     /**
      * Factory method to create an AppointmentData object without specified
-     * startTime. The start time will be set (in an Appointment) as soon as the 
+     * startTime. The start time will be set (in an Appointment) as soon as the
      * appointment is added to the Day schedule.
      *
      * @param description of the appointment
      * @param duration of the appointment
-     * @param priority of the appointment
      * @return AppointmentData object.
      * @throws NullPointerException if any of the parameters are null
      */
     AppointmentData createAppointmentData(String description,
-            Duration duration,
-            Priority priority);
-
-    /**
-     * Factory method to create an AppointmentData object without specified
-     * startTime. The start time will be set (in an Appointment) as soon as the 
-     * appointment is added to the Day schedule. The priority is set as LOW by default.
-     *
-     * @param description of the appointment
-     * @param duration of the appointment
-     * @return Appointment object.
-     * @throws NullPointerException if any of the parameters are null
-     */
-    default AppointmentData createAppointmentData(String description, Duration duration) {
-        return createAppointmentData(description, duration, Priority.LOW);
-    }
+            Duration duration);
 
     /**
      * Create an appointmentRequest with a required start time.
