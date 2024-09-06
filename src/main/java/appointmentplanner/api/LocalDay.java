@@ -11,44 +11,23 @@ import java.util.Objects;
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
-public class LocalDay {
-
-    private final ZoneId zone;
-    private final LocalDate date;
+public record LocalDay(ZoneId zone, LocalDate date) {
 
     /**
-     * Create a local day in the given timezone at the given date.
-     *
-     * @param zone the timezone to use
-     * @param date the LocalDate to use
+     * Default constructor. Make sure zone and date are not null.
+     * @param zone the zoneId
+     * @param date the date
      */
-    public LocalDay( ZoneId zone, LocalDate date ) {
-        this.zone = zone;
-        this.date = date;
+    public LocalDay {
+        Objects.requireNonNull(zone, "zone cannot be null");
+        Objects.requireNonNull(date, "date cannot be null");
     }
 
     /**
      * Create a LocalDay based on the system default timezone and the current date.
      */
     public LocalDay() {
-        this( ZoneId.systemDefault(), LocalDate.now() );
-    }
-
-    /**
-     * Get the date.
-     * @return the date
-     */
-    public LocalDate getDate() {
-        return date;
-    }
-
-    /**
-     * Get the timezone identifier.
-     *
-     * @return timezone identifier
-     */
-    public ZoneId getZone() {
-        return zone;
+        this(ZoneId.systemDefault(), LocalDate.now());
     }
 
     /**
@@ -57,8 +36,8 @@ public class LocalDay {
      * @param localTime the local time
      * @return the time as an instant at this date and timezone
      */
-    public Instant ofLocalTime( LocalTime localTime ) {
-        return localTime.atDate( date ).atZone( zone ).toInstant();
+    public Instant ofLocalTime(LocalTime localTime) {
+        return localTime.atDate(date).atZone(zone).toInstant();
     }
 
     /**
@@ -67,8 +46,8 @@ public class LocalDay {
      * @param instant to convert to LocalTime
      * @return the LocalTime of the given instant
      */
-    public LocalTime timeOfInstant( Instant instant ) {
-        return instant.atZone( zone ).toLocalTime();
+    public LocalTime timeOfInstant(Instant instant) {
+        return instant.atZone(zone).toLocalTime();
     }
 
     /**
@@ -77,8 +56,8 @@ public class LocalDay {
      * @param instant to convert to LocalDate
      * @return the LocalDate of the given instant
      */
-    public LocalDate dateOfInstant( Instant instant ) {
-        return instant.atZone( zone ).toLocalDate();
+    public LocalDate dateOfInstant(Instant instant) {
+        return instant.atZone(zone).toLocalDate();
     }
 
     /**
@@ -87,8 +66,8 @@ public class LocalDay {
      * @param days to add
      * @return the new LocalDay shifted forward or backward in time.
      */
-    public LocalDay plusDays( int days ) {
-        return new LocalDay( zone, date.plusDays( days ) );
+    public LocalDay plusDays(int days) {
+        return new LocalDay(zone, date.plusDays(days));
     }
 
     /**
@@ -98,8 +77,8 @@ public class LocalDay {
      * @param m the minutes
      * @return Instant at the given ours and minutes
      */
-    public Instant at( int hm, int m ) {
-        return ofLocalTime( LocalTime.of( hm, m, 0 ) );
+    public Instant at(int hm, int m) {
+        return ofLocalTime(LocalTime.of(hm, m, 0));
     }
 
     /**
@@ -109,36 +88,5 @@ public class LocalDay {
      */
     public static LocalDay now() {
         return new LocalDay();
-    }
-
-    @Override
-    public String toString() {
-        return "LocalDay{" + "zone=" + zone + ", date=" + date + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode( this.zone );
-        hash = 73 * hash + Objects.hashCode( this.date );
-        return hash;
-    }
-
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( obj == null ) {
-            return false;
-        }
-        if ( getClass() != obj.getClass() ) {
-            return false;
-        }
-        final LocalDay other = (LocalDay) obj;
-        if ( !Objects.equals( this.zone, other.zone ) ) {
-            return false;
-        }
-        return Objects.equals( this.date, other.date );
     }
 }

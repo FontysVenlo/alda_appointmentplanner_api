@@ -9,7 +9,7 @@ import java.time.Duration;
  * taking 45 minutes.
  *
  * Another example is having a treatment at a dentist or a beauty parlor. The
- * duration, priority, and description are known, but there is no time or date
+ * duration and description are known, but there is no time or date
  * allocated yet.
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
@@ -21,45 +21,20 @@ public interface AppointmentData {
      *
      * @return the duration of the appointment.
      */
-    Duration getDuration();
+    Duration duration();
 
     /**
      * The description of the appointment.
      *
      * @return non-empty string describing the appointment.
      */
-    String getDescription();
+    String description();
 
     /**
-     * Get the priority for the appointment.
-     *
-     * @return the priority
-     */
-    Priority getPriority();
-
-    /**
-     * Get the textual representation of AppointmentData. Contains description,
-     * duration and priority.
+     * Get the textual representation of AppointmentData. Contains description and duration.
      *
      * @return AppointmentData text.
      */
     @Override
     String toString();
-
-    /**
-     * Defines equality. Must be based on all fields of this class.
-     *
-     * @param obj the other object to check equality with
-     * @return true if the two appointments are equal
-     */
-    @Override
-    public boolean equals(Object obj);
-
-    /**
-     * Calculate a hash code value for the object.
-     *
-     * @return hashCode for this object
-     */
-    @Override
-    public int hashCode();
 }

@@ -34,7 +34,7 @@ public interface Timeline {
      *
      * @return Number of appointments on this timeline.
      */
-    int getNrOfAppointments();
+    int nrOfAppointments();
 
     /**
      * Get the number of gaps between start and en of day and between the
@@ -87,7 +87,7 @@ public interface Timeline {
      * appointment can't be met.
      * @throws NullPointerException If the appointmentData is null
      */
-    Optional<Appointment> addAppointment( LocalDay forDay, AppointmentData appointment, TimePreference timePreference );
+    Optional<Appointment> addAppointment(LocalDay forDay, AppointmentData appointment, TimePreference timePreference);
 
     /**
      * Add appointment with a fixed time. If the requested slot is available,
@@ -99,7 +99,7 @@ public interface Timeline {
      * @param startTime preferred start time of the appointment
      * @return the added appointment or an empty Optional on failure.
      */
-    Optional<Appointment> addAppointment( LocalDay forDay, AppointmentData appointment, LocalTime startTime );
+    Optional<Appointment> addAppointment(LocalDay forDay, AppointmentData appointment, LocalTime startTime);
 
     /**
      * Create an appointment based on previous appointmentRequest.
@@ -108,10 +108,10 @@ public interface Timeline {
      * @param appointmentRequest for this appointment.
      * @return the added appointment or an empty Optional on failure.
      */
-    default Optional<Appointment> addAppointment( LocalDay forDay,
-            AppointmentRequest appointmentRequest ) {
-        return addAppointment( forDay, appointmentRequest.getAppointmentData(),
-                appointmentRequest.getStartTime() );
+    default Optional<Appointment> addAppointment(LocalDay forDay,
+            AppointmentRequest appointmentRequest) {
+        return addAppointment(forDay, appointmentRequest.appointmentData(),
+                appointmentRequest.startTime());
     }
 
     /**
@@ -126,8 +126,8 @@ public interface Timeline {
      * apply.
      * @return the added appointment or an empty Optional on failure.
      */
-    Optional<Appointment> addAppointment( LocalDay forDay, AppointmentData appointment,
-            LocalTime startTime, TimePreference fallback );
+    Optional<Appointment> addAppointment(LocalDay forDay, AppointmentData appointment,
+            LocalTime startTime, TimePreference fallback);
 
     /**
      * Removes the given appointment, returning the AppointmentRequest of that appointment, if
@@ -138,7 +138,7 @@ public interface Timeline {
      * @return the AppointmentRequest of the removed appointment or null
      * if the appointment is not found.
      */
-    AppointmentRequest removeAppointment( Appointment appointment );
+    AppointmentRequest removeAppointment(Appointment appointment);
 
     /**
      * Removes appointments with description that matches a filter.
@@ -146,7 +146,7 @@ public interface Timeline {
      * @param filter to determine which items to remove.
      * @return the list of AppointmentRequests of removed appointments.
      */
-    List<AppointmentRequest> removeAppointments( Predicate<Appointment> filter );
+    List<AppointmentRequest> removeAppointments(Predicate<Appointment> filter);
 
     /**
      * Finds all appointments matching given filter.
@@ -154,15 +154,15 @@ public interface Timeline {
      * @param filter to determine which items to select.
      * @return list of matching appointments.
      */
-    List<Appointment> findAppointments( Predicate<Appointment> filter );
+    List<Appointment> findAppointments(Predicate<Appointment> filter);
 
     /**
      * Finds all appointments for this TimeLine.
      *
      * @return list of all appointments.
      */
-    default List<Appointment> getAppointments() {
-        return appointmentStream().collect( Collectors.toList() );
+    default List<Appointment> appointments() {
+        return appointmentStream().collect(Collectors.toList());
     }
 
     /**
@@ -178,7 +178,7 @@ public interface Timeline {
      * @param appointment to search for.
      * @return true if the Appointment is part of the Timeline, false otherwise.
      */
-    boolean contains( Appointment appointment );
+    boolean contains(Appointment appointment);
 
 
     /**
@@ -188,7 +188,7 @@ public interface Timeline {
      * @param duration the requested duration for an appointment
      * @return a list of gaps in which the appointment can be scheduled.
      */
-    List<TimeSlot> getGapsFitting( Duration duration );
+    List<TimeSlot> findGapsFitting(Duration duration);
 
     /**
      * Check if an appointment of the given duration can be scheduled.
@@ -196,7 +196,7 @@ public interface Timeline {
      * @param duration of the appointment
      * @return true is there is a sufficiently big gap, false otherwise
      */
-    boolean canAddAppointmentOfDuration( Duration duration );
+    boolean canAddAppointmentOfDuration(Duration duration);
 
     /**
      * This method finds all time gaps that can accommodate an appointment of
@@ -205,7 +205,7 @@ public interface Timeline {
      * @param duration the requested duration for an appointment
      * @return a list of start times on which an appointment can be scheduled
      */
-    List<TimeSlot> getGapsFittingReversed( Duration duration );
+    List<TimeSlot> findGapsFittingReversed(Duration duration);
 
     /**
      * Get the gaps matching the given duration, smallest fitting first.
@@ -213,7 +213,7 @@ public interface Timeline {
      * @param duration required
      * @return list of all gaps fitting, ordered, smallest gap first.
      */
-    List<TimeSlot> getGapsFittingSmallestFirst( Duration duration );
+    List<TimeSlot> findGapsFittingSmallestFirst(Duration duration);
 
     /**
      * Get the gaps matching the given duration, largest fitting first.
@@ -221,7 +221,7 @@ public interface Timeline {
      * @param duration required
      * @return list of all gaps fitting, ordered, largest gap first.
      */
-    List<TimeSlot> getGapsFittingLargestFirst( Duration duration );
+    List<TimeSlot> findGapsFittingLargestFirst(Duration duration);
 
     /**
      * Find matching free time slots in this and other TimeLines. To facilitate
@@ -231,5 +231,5 @@ public interface Timeline {
      * @param other day plans
      * @return the list of free slots that all DayPlans share.
      */
-    List<TimeSlot> getMatchingFreeSlotsOfDuration( Duration minLength, List<Timeline> other );
+    List<TimeSlot> findMatchingFreeSlotsOfDuration(Duration minLength, List<Timeline> other);
 }

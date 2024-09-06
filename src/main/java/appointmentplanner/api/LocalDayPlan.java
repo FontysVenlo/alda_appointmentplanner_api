@@ -29,7 +29,7 @@ public interface LocalDayPlan {
      *
      * @return the day
      */
-    LocalDay getDay();
+    LocalDay day();
 
     /**
      * Start time of the day, inclusive.
@@ -51,15 +51,15 @@ public interface LocalDayPlan {
      *
      * @return the timeline used by this LocalDayPlan
      */
-    Timeline getTimeline();
+    Timeline timeline();
 
     /**
      * Get the allowed first time for this day.
      *
      * @return the start time of this plan
      */
-    default LocalTime getStartTime() {
-        return getDay().timeOfInstant(startOfDay() );
+    default LocalTime startTime() {
+        return day().timeOfInstant(startOfDay());
     }
 
     /**
@@ -67,8 +67,8 @@ public interface LocalDayPlan {
      *
      * @return the end time in this plan
      */
-    default LocalTime getEndTime() {
-        return getDay().timeOfInstant(endOfDay() );
+    default LocalTime endTime() {
+        return day().timeOfInstant(endOfDay());
     }
 
     /**
@@ -80,10 +80,10 @@ public interface LocalDayPlan {
      * @return an optional of Appointment, which is present when the appointment
      * was created successfully, or empty when not successful.
      */
-    default Optional<Appointment> addAppointment( AppointmentData appointmentData,
+    default Optional<Appointment> addAppointment(AppointmentData appointmentData,
                                                   LocalTime start,
-                                                  TimePreference fallback ) {
-        return getTimeline().addAppointment( getDay(), appointmentData, start, fallback );
+                                                  TimePreference fallback) {
+        return timeline().addAppointment(day(), appointmentData, start, fallback);
     }
 
     /**
@@ -94,21 +94,22 @@ public interface LocalDayPlan {
      * @param startTime       fixed time
      * @return Optional Appointment
      */
-    default Optional<Appointment> addAppointment( AppointmentData appointmentData, LocalTime startTime ) {
-        return getTimeline().addAppointment( getDay(), appointmentData, startTime );
+    default Optional<Appointment> addAppointment(AppointmentData appointmentData, LocalTime startTime) {
+        return timeline().addAppointment(day(), appointmentData, startTime);
     }
 
     /**
-     * Add and appointment with time preference. This request can fail (Optional
-     * is not present) if the data's duration does not fit in the (already
-     * planned day).
+     * Add and appointment with time preference. This request can fail (Optional is not present)
+     * if the data's duration does not fit in the (already planned day).
+     *
+     * This method only supports TimePreferences EARLIEST or LATEST; Other values are defaulted to EARLIEST
      *
      * @param appointmentData data
      * @param preference            time preference
      * @return Optional Appointment
      */
-    default Optional<Appointment> addAppointment( AppointmentData appointmentData, TimePreference preference ) {
-        return getTimeline().addAppointment( getDay(), appointmentData, preference );
+    default Optional<Appointment> addAppointment(AppointmentData appointmentData, TimePreference preference) {
+        return timeline().addAppointment(day(), appointmentData, preference);
     }
 
     /**
@@ -117,8 +118,8 @@ public interface LocalDayPlan {
      * @param appointment the appointment to remove
      * @return AppointmentRequest, the original appointment request
      */
-    default AppointmentRequest removeAppointment( Appointment appointment ) {
-        return getTimeline().removeAppointment( appointment );
+    default AppointmentRequest removeAppointment(Appointment appointment) {
+        return timeline().removeAppointment(appointment);
     }
 
     /**
@@ -127,69 +128,69 @@ public interface LocalDayPlan {
      * @param filter to remove all appointments that match
      * @return all appointment requests of removed appointments
      */
-    default List<AppointmentRequest> removeAppointments( Predicate<Appointment> filter ) {
-        return getTimeline().removeAppointments( filter );
+    default List<AppointmentRequest> removeAppointments(Predicate<Appointment> filter) {
+        return timeline().removeAppointments(filter);
     }
 
     /**
-     * {@link Timeline#getAppointments()}.
+     * {@link Timeline#appointments()}.
      *
      * @return all appointments
      */
     default List<Appointment> getAppointments() {
-        return getTimeline().getAppointments();
+        return timeline().appointments();
     }
 
     /**
-     * See {@link Timeline#getMatchingFreeSlotsOfDuration(Duration, List)}.
+     * See {@link Timeline#findMatchingFreeSlotsOfDuration(Duration, List)}.
      *
      * @param duration Minimum duration of the slots
      * @param plans that could have common gaps
      * @return the list of gaps this and each of the other plans have in common
      * with a minimum length of duration.
      */
-    default List<TimeSlot> getMatchingFreeSlotsOfDuration( Duration duration, List<LocalDayPlan> plans ) {
-        return getTimeline().getMatchingFreeSlotsOfDuration( duration, plans.stream().map( LocalDayPlan::getTimeline ).collect( toList() ) );
+    default List<TimeSlot> getMatchingFreeSlotsOfDuration(Duration duration, List<LocalDayPlan> plans) {
+        return timeline().findMatchingFreeSlotsOfDuration(duration, plans.stream().map(LocalDayPlan::timeline).collect(toList()));
     }
 
     /**
-     * See {@link Timeline#getGapsFitting(Duration)}.
+     * See {@link Timeline#findGapsFitting(Duration)}.
      *
      * @param duration the minimum duration that should fit
      * @return list of timeslots that fit the duration
      */
-    default List<TimeSlot> getGapsFitting( Duration duration ) {
-        return getTimeline().getGapsFitting( duration );
+    default List<TimeSlot> getGapsFitting(Duration duration) {
+        return timeline().findGapsFitting(duration);
     }
 
     /**
-     * {@link Timeline#getGapsFittingReversed(Duration)}.
+     * {@link Timeline#findGapsFittingReversed(Duration)}.
      *
      * @param duration the minimum duration that should fit
      * @return list of timeslots that fit the duration
      */
-    default List<TimeSlot> getGapsFittingReversed( Duration duration ) {
-        return getTimeline().getGapsFittingReversed( duration );
+    default List<TimeSlot> getGapsFittingReversed(Duration duration) {
+        return timeline().findGapsFittingReversed(duration);
     }
 
     /**
-     * See{@link Timeline#getGapsFittingLargestFirst(Duration)}.
+     * See{@link Timeline#findGapsFittingLargestFirst(Duration)}.
      *
      * @param duration the minimum duration
      * @return list of gaps fitting the duration
      */
-    default List<TimeSlot> getGapsFittingLargestFirst( Duration duration ) {
-        return getTimeline().getGapsFittingLargestFirst( duration );
+    default List<TimeSlot> getGapsFittingLargestFirst(Duration duration) {
+        return timeline().findGapsFittingLargestFirst(duration);
     }
 
     /**
-     * {@link Timeline#getGapsFittingSmallestFirst(Duration)}.
+     * {@link Timeline#findGapsFittingSmallestFirst(Duration)}.
      *
      * @param duration the minimum duration
      * @return list of timeslots fitting the duration
      */
-    default List<TimeSlot> getGapsFittingSmallestFirst( Duration duration ) {
-        return getTimeline().getGapsFittingSmallestFirst( duration );
+    default List<TimeSlot> getGapsFittingSmallestFirst(Duration duration) {
+        return timeline().findGapsFittingSmallestFirst(duration);
     }
 
     /**
@@ -198,8 +199,8 @@ public interface LocalDayPlan {
      * @param duration the minimum duration
      * @return true of a gap is available, false otherwise
      */
-    default boolean canAddAppointmentOfDuration( Duration duration ) {
-        return getTimeline().canAddAppointmentOfDuration( duration );
+    default boolean canAddAppointmentOfDuration(Duration duration) {
+        return timeline().canAddAppointmentOfDuration(duration);
     }
 
     /**
@@ -208,8 +209,8 @@ public interface LocalDayPlan {
      * @param filter to find appointments
      * @return list of appointments that fit the filter
      */
-    default List<Appointment> findAppointments( Predicate<Appointment> filter ) {
-        return getTimeline().findAppointments( filter );
+    default List<Appointment> findAppointments(Predicate<Appointment> filter) {
+        return timeline().findAppointments(filter);
     }
 
     /**
@@ -227,8 +228,8 @@ public interface LocalDayPlan {
      * @param appointment the appointment to check
      * @return true if present, false otherwise
      */
-    default boolean contains( Appointment appointment ) {
-        return getTimeline().contains( appointment );
+    default boolean contains(Appointment appointment) {
+        return timeline().contains(appointment);
     }
 
     /**
@@ -236,17 +237,17 @@ public interface LocalDayPlan {
      *
      * @return the date according to this LocalDayPlan's time zone
      */
-    default LocalDate getDate() {
-        return getDay().getDate();
+    default LocalDate date() {
+        return day().date();
     }
 
     /**
-     * {@link Timeline#getNrOfAppointments()}.
+     * {@link Timeline#nrOfAppointments()}.
      *
      * @return number of appointments
      */
-    default int getNrOfAppointments() {
-        return getTimeline().getNrOfAppointments();
+    default int nrOfAppointments() {
+        return timeline().nrOfAppointments();
     }
 
     /**
@@ -256,8 +257,8 @@ public interface LocalDayPlan {
      * @param minute sic
      * @return the point in time as Instant
      */
-    default Instant at( int hour, int minute ) {
-        return getDay().at( hour, minute );
+    default Instant at(int hour, int minute) {
+        return day().at(hour, minute);
     }
 
 }
