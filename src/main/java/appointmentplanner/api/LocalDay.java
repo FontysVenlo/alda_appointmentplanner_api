@@ -13,6 +13,11 @@ import java.util.Objects;
  */
 public record LocalDay(ZoneId zone, LocalDate date) {
 
+    /**
+     * Default constructor. Make sure zone and date are not null.
+     * @param zone the zoneId
+     * @param date the date
+     */
     public LocalDay {
         Objects.requireNonNull(zone, "zone cannot be null");
         Objects.requireNonNull(date, "date cannot be null");
