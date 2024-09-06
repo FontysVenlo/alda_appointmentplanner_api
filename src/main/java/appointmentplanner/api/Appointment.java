@@ -25,32 +25,15 @@ public interface Appointment extends TimeSlot {
      *
      * @return the request.
      */
-    AppointmentRequest getRequest();
+    AppointmentRequest request();
 
     /**
      * Override the default toString. toString() returns startTime, endTime,
-     * description and priority like: "2020-09-12 14:00 - 15:55 ALDA Lesson
-     * (HIGH)" This will make your testing and debugging life so much easier.
+     * description and priority like: "2020-09-12 14:00 - 15:55 ALDA Lesson"
+     * This will make your testing and debugging life so much easier.
      *
      * @return String representation of Appointment.
      */
     @Override
     String toString();
-
-    /**
-     * Defines equality. Must be based on all fields of this class.
-     *
-     * @param obj the other object to check equality with
-     * @return true if the two appointments are equal
-     */
-    @Override
-    public boolean equals(Object obj);
-
-    /**
-     * Calculate a hash code value for the object.
-     *
-     * @return hashCode for this object
-     */
-    @Override
-    public int hashCode();
 }

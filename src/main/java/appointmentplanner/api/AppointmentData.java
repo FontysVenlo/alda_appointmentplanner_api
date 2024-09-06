@@ -21,21 +21,21 @@ public interface AppointmentData {
      *
      * @return the duration of the appointment.
      */
-    Duration getDuration();
+    Duration duration();
 
     /**
      * The description of the appointment.
      *
      * @return non-empty string describing the appointment.
      */
-    String getDescription();
+    String description();
 
     /**
      * Get the priority for the appointment.
      *
      * @return the priority
      */
-    Priority getPriority();
+    Priority priority();
 
     /**
      * Get the textual representation of AppointmentData. Contains description,
@@ -45,21 +45,4 @@ public interface AppointmentData {
      */
     @Override
     String toString();
-
-    /**
-     * Defines equality. Must be based on all fields of this class.
-     *
-     * @param obj the other object to check equality with
-     * @return true if the two appointments are equal
-     */
-    @Override
-    public boolean equals(Object obj);
-
-    /**
-     * Calculate a hash code value for the object.
-     *
-     * @return hashCode for this object
-     */
-    @Override
-    public int hashCode();
 }

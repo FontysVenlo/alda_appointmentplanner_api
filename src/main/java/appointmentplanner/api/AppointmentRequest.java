@@ -36,11 +36,12 @@ public interface AppointmentRequest {
     /**
      * Get the start time of the intended appointment.
      * If the time is not specified, this method may return null.
+     *
      * @param onDay the LocalDay the time is on.
      * @return the start time as instant, potentially null.
      */
-    default Instant getStart(LocalDay onDay) {
-        return onDay.ofLocalTime(getStartTime());
+    default Instant start(LocalDay onDay) {
+        return onDay.ofLocalTime(startTime());
     }
 
     /**
@@ -48,14 +49,14 @@ public interface AppointmentRequest {
      *
      * @return the start time
      */
-    LocalTime getStartTime();
+    LocalTime startTime();
 
     /**
      * Get the appointment details of this appointment.
      *
      * @return the data
      */
-    AppointmentData getAppointmentData();
+    AppointmentData appointmentData();
 
     /**
      * Time preference given with this appointment request.
@@ -63,7 +64,7 @@ public interface AppointmentRequest {
      *
      * @return the time preference
      */
-    default TimePreference getTimePreference() {
+    default TimePreference timePreference() {
         return TimePreference.UNSPECIFIED;
     }
 
@@ -71,24 +72,7 @@ public interface AppointmentRequest {
      * Get the duration of the appointment request.
      * @return the duration of the request
      */
-    default Duration getDuration() {
-        return getAppointmentData().getDuration();
+    default Duration duration() {
+        return appointmentData().duration();
     }
-    
-    /**
-     * Defines equality, must be based on all fields of this class.
-     * @param obj the other object to check equality with
-     * @return true if the two appointments are equal
-     */
-    @Override
-    public boolean equals(Object obj);
-    
-    /**
-     * Calculate a hash code value for the object.
-     * @return hashCode for this object.
-     */
-    @Override
-    public int hashCode();
-    
-    
 }
