@@ -99,9 +99,10 @@ public interface LocalDayPlan {
     }
 
     /**
-     * Add and appointment with time preference. This request can fail (Optional
-     * is not present) if the data's duration does not fit in the (already
-     * planned day).
+     * Add and appointment with time preference. This request can fail (Optional is not present)
+     * if the data's duration does not fit in the (already planned day).
+     *
+     * This method only supports TimePreferences EARLIEST or LATEST; Other values are defaulted to EARLIEST
      *
      * @param appointmentData data
      * @param preference            time preference
