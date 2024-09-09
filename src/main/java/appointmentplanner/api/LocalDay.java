@@ -8,6 +8,8 @@ import java.util.Objects;
 
 /**
  * Utility class to do zoned time conversion.
+ * @param zone the time zone for this day
+ * @param date the date of this day
  *
  * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
