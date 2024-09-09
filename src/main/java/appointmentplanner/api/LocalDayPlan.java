@@ -137,7 +137,7 @@ public interface LocalDayPlan {
      *
      * @return all appointments
      */
-    default List<Appointment> getAppointments() {
+    default List<Appointment> appointments() {
         return timeline().appointments();
     }
 
@@ -149,7 +149,7 @@ public interface LocalDayPlan {
      * @return the list of gaps this and each of the other plans have in common
      * with a minimum length of duration.
      */
-    default List<TimeSlot> getMatchingFreeSlotsOfDuration(Duration duration, List<LocalDayPlan> plans) {
+    default List<TimeSlot> findMatchingFreeSlotsOfDuration(Duration duration, List<LocalDayPlan> plans) {
         return timeline().findMatchingFreeSlotsOfDuration(duration, plans.stream().map(LocalDayPlan::timeline).collect(toList()));
     }
 
@@ -159,7 +159,7 @@ public interface LocalDayPlan {
      * @param duration the minimum duration that should fit
      * @return list of timeslots that fit the duration
      */
-    default List<TimeSlot> getGapsFitting(Duration duration) {
+    default List<TimeSlot> findGapsFitting(Duration duration) {
         return timeline().findGapsFitting(duration);
     }
 
@@ -169,7 +169,7 @@ public interface LocalDayPlan {
      * @param duration the minimum duration that should fit
      * @return list of timeslots that fit the duration
      */
-    default List<TimeSlot> getGapsFittingReversed(Duration duration) {
+    default List<TimeSlot> findGapsFittingReversed(Duration duration) {
         return timeline().findGapsFittingReversed(duration);
     }
 
@@ -179,7 +179,7 @@ public interface LocalDayPlan {
      * @param duration the minimum duration
      * @return list of gaps fitting the duration
      */
-    default List<TimeSlot> getGapsFittingLargestFirst(Duration duration) {
+    default List<TimeSlot> findGapsFittingLargestFirst(Duration duration) {
         return timeline().findGapsFittingLargestFirst(duration);
     }
 
@@ -189,7 +189,7 @@ public interface LocalDayPlan {
      * @param duration the minimum duration
      * @return list of timeslots fitting the duration
      */
-    default List<TimeSlot> getGapsFittingSmallestFirst(Duration duration) {
+    default List<TimeSlot> findGapsFittingSmallestFirst(Duration duration) {
         return timeline().findGapsFittingSmallestFirst(duration);
     }
 
