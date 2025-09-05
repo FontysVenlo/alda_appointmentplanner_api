@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.fontysvenlo.alda</groupId>
     <artifactId>appointmentplanner_api</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.0-pre.1</version>
     <packaging>jar</packaging>
     <name>ALDA AppointmentPlanner API</name>
     <properties>
@@ -19,4 +19,18 @@
             --add-opens appoinmentplanner.api/appointmentplanner.api=ALL-UNNAMED
         </surefire.opens>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.8.0</version>
+            <extensions>true</extensions>
+            <configuration>
+                <publishingServerId>central</publishingServerId>
+            </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
