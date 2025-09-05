@@ -22,8 +22,6 @@ import java.time.LocalTime;
  * end equal, such that it has an effective duration of
  * zero minutes, zero nanoseconds may have its use as for instance a sentinel
  * value.
- *
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface TimeSlot extends Comparable<TimeSlot> {
 

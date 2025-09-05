@@ -5,9 +5,6 @@ package appointmentplanner.api;
 
 /**
  * Strategy to find a Time slot to add an Appointment.
- *
- * @author Richard van den Ham {@code r.vandenham@fontys.nl}
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public enum TimePreference {
     /**

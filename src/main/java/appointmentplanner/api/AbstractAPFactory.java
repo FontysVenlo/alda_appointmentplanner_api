@@ -7,8 +7,6 @@ import java.time.LocalTime;
 /**
  * This is the interface that the user (the teachers) of your implementation use
  * to obtain instances of the classes implementing the given other interfaces.
- * *
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface AbstractAPFactory {
 
@@ -80,8 +78,8 @@ public interface AbstractAPFactory {
      * @return the request
      */
     AppointmentRequest createAppointmentRequest(AppointmentData appointmentData,
-                                                 LocalTime preferredStart,
-                                                 TimePreference fallBack);
+                                                LocalTime preferredStart,
+                                                TimePreference fallBack);
 
     /**
      * Create a time slot between two times.

@@ -24,9 +24,6 @@ import java.time.LocalTime;
  * UNSPECIFIED means that the invoker does not have any preference regarding
  * time. It's up to the addAppointment method to decide how to deal with such a
  * request.
- * 
- * @author Pieter van den Hombergh
- * @author Richard van den Ham
  */
 public interface AppointmentRequest {
     

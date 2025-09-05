@@ -11,8 +11,6 @@ import java.time.Duration;
  * Another example is having a treatment at a dentist or a beauty parlor. The
  * duration and description are known, but there is no time or date
  * allocated yet.
- *
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface AppointmentData {
 

@@ -14,9 +14,6 @@ package appointmentplanner.api;
  * appointment is only valid when it is allocated on some timeline.
  *
  * An appointment holds an AppointmentRequest and a start Instant.
- *
- * @author Richard van den Ham {@code r.vandenham@fontys.nl}
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface Appointment extends TimeSlot {
 
