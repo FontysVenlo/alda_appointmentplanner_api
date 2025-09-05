@@ -7,7 +7,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Timezone and day based view on timeline. This is the classic view on a day
@@ -19,8 +18,6 @@ import static java.util.stream.Collectors.toList;
  * The implementer should implement a toString that shows all appointments based
  * on local time. It is left to the discretion of the implementer to also show
  * the gaps.
- *
- * @author Pieter van den Hombergh {@code p.vandenhombergh@fontys.nl}
  */
 public interface LocalDayPlan {
 
@@ -45,13 +42,6 @@ public interface LocalDayPlan {
      * @return instant representing the end of the day
      */
     Instant endOfDay();
-
-    /**
-     * Get the timeline used by this LocalDayPlan.
-     *
-     * @return the timeline used by this LocalDayPlan
-     */
-    Timeline timeline();
 
     /**
      * Get the allowed first time for this day.
@@ -80,12 +70,9 @@ public interface LocalDayPlan {
      * @return an optional of Appointment, which is present when the appointment
      * was created successfully, or empty when not successful.
      */
-    default Optional<Appointment> addAppointment(AppointmentData appointmentData,
+    Optional<Appointment> addAppointment(AppointmentData appointmentData,
                                                   LocalTime start,
-                                                  TimePreference fallback) {
-        return timeline().addAppointment(day(), appointmentData, start, fallback);
-    }
-
+                                                  TimePreference fallback);
     /**
      * Add and appointment with fix start time. This request can fail (Optional
      * is not present) if the start time is not available.
@@ -94,9 +81,7 @@ public interface LocalDayPlan {
      * @param startTime       fixed time
      * @return Optional Appointment
      */
-    default Optional<Appointment> addAppointment(AppointmentData appointmentData, LocalTime startTime) {
-        return timeline().addAppointment(day(), appointmentData, startTime);
-    }
+    Optional<Appointment> addAppointment(AppointmentData appointmentData, LocalTime startTime);
 
     /**
      * Add and appointment with time preference. This request can fail (Optional is not present)
@@ -108,110 +93,61 @@ public interface LocalDayPlan {
      * @param preference            time preference
      * @return Optional Appointment
      */
-    default Optional<Appointment> addAppointment(AppointmentData appointmentData, TimePreference preference) {
-        return timeline().addAppointment(day(), appointmentData, preference);
-    }
+    Optional<Appointment> addAppointment(AppointmentData appointmentData, TimePreference preference);
 
     /**
-     * See {@link Timeline#removeAppointment(Appointment)}.
+     * Removes the given appointment, returning the AppointmentRequest of that appointment, if
+     * found. This day is searched for a non-free time slot matching the
+     * appointment. The returned data could be used to re-plan the appointment.
      *
-     * @param appointment the appointment to remove
-     * @return AppointmentRequest, the original appointment request
+     * @param appointment to remove
+     * @return the AppointmentRequest of the removed appointment or null
+     * if the appointment is not found.
      */
-    default AppointmentRequest removeAppointment(Appointment appointment) {
-        return timeline().removeAppointment(appointment);
-    }
+    AppointmentRequest removeAppointment(Appointment appointment);
 
     /**
-     * {@link Timeline#removeAppointments(Predicate)}.
+     * Removes appointments with description that matches a filter.
      *
-     * @param filter to remove all appointments that match
-     * @return all appointment requests of removed appointments
+     * @param filter to determine which items to remove.
+     * @return the list of AppointmentRequests of removed appointments.
      */
-    default List<AppointmentRequest> removeAppointments(Predicate<Appointment> filter) {
-        return timeline().removeAppointments(filter);
-    }
+    List<AppointmentRequest> removeAppointments(Predicate<Appointment> filter);
 
     /**
-     * {@link Timeline#appointments()}.
+     * Finds all appointments for this plan.
      *
-     * @return all appointments
+     * @return list of all appointments.
      */
-    default List<Appointment> appointments() {
-        return timeline().appointments();
-    }
+    List<Appointment> appointments();
 
     /**
-     * See {@link Timeline#findMatchingFreeSlotsOfDuration(Duration, List)}.
-     *
-     * @param duration Minimum duration of the slots
+     * Find matching free time slots in this and other TimeLines. To facilitate
+     * appointment proposals.
+     * 
+     * @param duration Minimum duration of the slot to search for.
      * @param plans that could have common gaps
      * @return the list of gaps this and each of the other plans have in common
      * with a minimum length of duration.
      */
-    default List<TimeSlot> findMatchingFreeSlotsOfDuration(Duration duration, List<LocalDayPlan> plans) {
-        return timeline().findMatchingFreeSlotsOfDuration(duration, plans.stream().map(LocalDayPlan::timeline).collect(toList()));
-    }
+    List<TimeSlot> findMatchingFreeSlotsOfDuration(Duration duration, List<LocalDayPlan> plans);
 
     /**
-     * See {@link Timeline#findGapsFitting(Duration)}.
+     * This method finds all time gaps that can accommodate an appointment of
+     * the given duration in natural order.
      *
-     * @param duration the minimum duration that should fit
-     * @return list of timeslots that fit the duration
+     * @param duration the requested duration for an appointment
+     * @return a list of gaps in which the appointment can be scheduled.
      */
-    default List<TimeSlot> findGapsFitting(Duration duration) {
-        return timeline().findGapsFitting(duration);
-    }
+    List<TimeSlot> findGapsFitting(Duration duration);
 
     /**
-     * {@link Timeline#findGapsFittingReversed(Duration)}.
+     * Finds all appointments matching given filter.
      *
-     * @param duration the minimum duration that should fit
-     * @return list of timeslots that fit the duration
+     * @param filter to determine which items to select.
+     * @return list of matching appointments.
      */
-    default List<TimeSlot> findGapsFittingReversed(Duration duration) {
-        return timeline().findGapsFittingReversed(duration);
-    }
-
-    /**
-     * See{@link Timeline#findGapsFittingLargestFirst(Duration)}.
-     *
-     * @param duration the minimum duration
-     * @return list of gaps fitting the duration
-     */
-    default List<TimeSlot> findGapsFittingLargestFirst(Duration duration) {
-        return timeline().findGapsFittingLargestFirst(duration);
-    }
-
-    /**
-     * {@link Timeline#findGapsFittingSmallestFirst(Duration)}.
-     *
-     * @param duration the minimum duration
-     * @return list of timeslots fitting the duration
-     */
-    default List<TimeSlot> findGapsFittingSmallestFirst(Duration duration) {
-        return timeline().findGapsFittingSmallestFirst(duration);
-    }
-
-    /**
-     * {@link Timeline#canAddAppointmentOfDuration(Duration)}.
-     *
-     * @param duration the minimum duration
-     * @return true of a gap is available, false otherwise
-     */
-    default boolean canAddAppointmentOfDuration(Duration duration) {
-        return timeline().canAddAppointmentOfDuration(duration);
-    }
-
-    /**
-     * {@link Timeline#findAppointments(Predicate)} ()}.
-     *
-     * @param filter to find appointments
-     * @return list of appointments that fit the filter
-     */
-    default List<Appointment> findAppointments(Predicate<Appointment> filter) {
-        return timeline().findAppointments(filter);
-    }
+    List<Appointment> findAppointments(Predicate<Appointment> filter);
 
     /**
      * Return a string containing the local date, the time zone and all
@@ -223,14 +159,12 @@ public interface LocalDayPlan {
     String toString();
 
     /**
-     * {@link Timeline#contains(Appointment)}.
+     * Check if day contains the given appointment.
      *
-     * @param appointment the appointment to check
-     * @return true if present, false otherwise
+     * @param appointment to search for.
+     * @return true if the Appointment is part of the planning, false otherwise.
      */
-    default boolean contains(Appointment appointment) {
-        return timeline().contains(appointment);
-    }
+    boolean contains(Appointment appointment);
 
     /**
      * What is the (start) date of this plan.
@@ -242,13 +176,11 @@ public interface LocalDayPlan {
     }
 
     /**
-     * {@link Timeline#nrOfAppointments()}.
+     * Returns the number of appointments on a day.
      *
-     * @return number of appointments
+     * @return Number of appointments on this plan.
      */
-    default int nrOfAppointments() {
-        return timeline().nrOfAppointments();
-    }
+    int nrOfAppointments();
 
     /**
      * Get the instant at the given hour and minute of this local day plan.
@@ -260,5 +192,4 @@ public interface LocalDayPlan {
     default Instant at(int hour, int minute) {
         return day().at(hour, minute);
     }
-
 }
