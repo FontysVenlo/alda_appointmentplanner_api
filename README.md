@@ -2,7 +2,7 @@
 
 This repository houses the API source code of of the appointment planner exercise.
 
-The JavaDoc can be found at [https://fontysvenlo.github.io/alda_appointmentplanner_api/v1.2.1](https://fontysvenlo.github.io/alda_appointmentplanner_api/v1.2.1).
+The JavaDoc can be found at [https://fontysvenlo.github.io/alda_appointmentplanner_api/latest](https://fontysvenlo.github.io/alda_appointmentplanner_api/latest).
 
 ## Instructions
 
