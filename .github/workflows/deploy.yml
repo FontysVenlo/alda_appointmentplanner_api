@@ -23,7 +23,7 @@ jobs:
         run: echo "POM_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Get tag version
-        run: echo "TAG_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: echo "TAG_VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
       - name: Make sure that the versions match
         run: '[[ "v$POM_VERSION" == "$TAG_VERSION" ]] && exit 0 || exit 1'
 
