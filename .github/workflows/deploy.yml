@@ -1,17 +1,9 @@
 name: Publish package to the Maven Central Repository
 
-# TODO:
-# on:
-#   release:
-#     types: [created]
-
 on:
-  push:
-    branches:
-      - 'releases/**'
-      - 'testdeploy2'
-    tags:
-      - 'v*'
+  release:
+    types: [created]
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -35,15 +27,13 @@ jobs:
       - name: Get POM version
         run: echo "POM_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      # TODO:
-      # - name: Get tag version
-      #   run: echo "TAG_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      # - name: Make sure that the versions match
-      #   run: '[[ "v$POM_VERSION" == "$TAG_VERSION" ]] && exit 0 || exit 1'
+      - name: Get tag version
+        run: echo "TAG_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Make sure that the versions match
+        run: '[[ "v$POM_VERSION" == "$TAG_VERSION" ]] && exit 0 || exit 1'
 
       - name: Publish package to maven central
-        # TODO: fix informaticspom and add release profile again
-        run: mvn --batch-mode clean compile javadoc:javadoc deploy
+        run: mvn --batch-mode clean compile javadoc:javadoc deploy -P release
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USER }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
