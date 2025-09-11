@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.fontysvenlo</groupId>
         <artifactId>informaticspom</artifactId>
-        <version>1.6</version>
+        <version>1.7</version>
     </parent>
     <groupId>io.github.fontysvenlo</groupId>
     <artifactId>alda_appointmentplanner_api</artifactId>
