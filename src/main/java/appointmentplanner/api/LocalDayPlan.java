@@ -138,6 +138,7 @@ public interface LocalDayPlan {
      *
      * @param duration the requested duration for an appointment
      * @return a list of gaps in which the appointment can be scheduled.
+     * @throws IllegalArgumentException if duration is null or negative.
      */
     List<TimeSlot> findGapsFitting(Duration duration);
 

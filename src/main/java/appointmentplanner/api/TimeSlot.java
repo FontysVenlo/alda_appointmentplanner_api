@@ -125,4 +125,12 @@ public interface TimeSlot extends Comparable<TimeSlot> {
     default LocalDate endDate(LocalDay day) {
         return day.dateOfInstant(end());
     }
+    
+    /**
+     * Describes the TimeSlot in UTC.
+     * Start and end times are displayed in UTC. 
+     * @return String describing the TimeSlot.
+     */
+    @Override
+    String toString();
 }

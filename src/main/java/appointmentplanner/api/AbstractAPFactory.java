@@ -80,31 +80,4 @@ public interface AbstractAPFactory {
     AppointmentRequest createAppointmentRequest(AppointmentData appointmentData,
                                                 LocalTime preferredStart,
                                                 TimePreference fallBack);
-
-    /**
-     * Create a time slot between two times.
-     *
-     * @param start date+time
-     * @param end date+time
-     * @return the time slot
-     */
-    TimeSlot between(Instant start, Instant end);
-
-    /**
-     * Compute time slot on a date between given start- and endTime.
-     *
-     * If endTime is less than or equal to start time, it is assumed that the
-     * end time is on the next day.
-     *
-     * @param day local day with time zone and date
-     * @param startTime start time
-     * @param endTime end time
-     * @return the timeslot
-     */
-    default TimeSlot between(LocalDay day, LocalTime startTime, LocalTime endTime) {
-        boolean endBeforeOrAtStart = !endTime.isAfter(startTime);
-        Instant start = day.ofLocalTime(startTime);
-        Instant end = (endBeforeOrAtStart) ? day.plusDays(1).ofLocalTime(endTime) : day.ofLocalTime(endTime);
-        return between(start, end);
-    }
 }
