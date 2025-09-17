@@ -1,63 +1,59 @@
 package appointmentplanner.api;
 
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * Class holding the full details of an appointment request.
+ * Details of an Appointment or AppointmentRequest.
  *
- * Note that an appointment request is NOT an appointment but only an expression
- * of intent!
- * 
- * The AppointmentRequest is not input for the external API, but it is returned
- * when removing Appointment(s). The idea is that, based on the AppointmentRequest
- * of the removed Appointment, the appointment could be rescheduled.
- * 
- * The AppointmentRequest is mainly used internally in the TimeLine, when an 
- * actual appointment is created.
- * 
- * The AppointmentRequest holds LocalTime startTime, AppointmentData and 
- * TimePreference. Normally, either startTime or TimePreference is not null. If
- * no TimePreference is set, it defaults to TimePreference.UNSPECIFIED. An 
- * AppointmentRequest with no startTime defined and with TimePreference 
- * UNSPECIFIED means that the invoker does not have any preference regarding
- * time. It's up to the addAppointment method to decide how to deal with such a
- * request.
+ * The data include a description and the expected duration. Think of a lesson
+ * taking 45 minutes.
+ *
+ * Another example is having a treatment at a dentist or a beauty parlor. The
+ * duration and description are known, but there is no time or date allocated
+ * yet.
  */
 public interface AppointmentRequest {
-    
-    //TODO Specify how to deal with TimePreferences EARLIEST_AFTER and LATEST_BEFORE together with startTime null
-    
 
+    LocalDate localDate();
+    
+    ZoneId zoneId();
+    
     /**
-     * Get the start time of the intended appointment.
-     * If the time is not specified, this method may return null.
-     *
-     * @param onDay the LocalDay the time is on.
-     * @return the start time as instant, potentially null.
-     */
-    default Instant start(LocalDay onDay) {
-        return onDay.ofLocalTime(startTime());
-    }
-
-    /**
-     * Get the requested local start time.
-     *
-     * @return the start time
+     * Intended start time.
+     * @return intended start time of the appointment.
      */
     LocalTime startTime();
 
     /**
-     * Get the appointment details of this appointment.
-     *
-     * @return the data
+     * Intended end time.
+     * @return intended end time of the appointment.
      */
-    AppointmentData appointmentData();
+    default LocalTime endTime(){
+        return startTime().plus(duration());
+    };
 
     /**
-     * Time preference given with this appointment request.
-     * The default is TimePreference.UNSPECIFIED.
+     * The duration of the intended appointment.
+     *
+     * @return the duration of the appointment request.
+     */
+    Duration duration();
+
+    /**
+     * The description of the appointment.
+     *
+     * @return non-empty string describing the appointment.
+     */
+    String description();
+
+    /**
+     * Time preference given with this appointment request. The default is
+     * TimePreference.UNSPECIFIED.
      *
      * @return the time preference
      */
@@ -65,11 +61,18 @@ public interface AppointmentRequest {
         return TimePreference.UNSPECIFIED;
     }
 
+    String[] calendars();
+    
+    default List<String> calendarsAsList(){
+        return Arrays.asList(calendars());
+    };
+    
     /**
-     * Get the duration of the appointment request.
-     * @return the duration of the request
+     * Get the textual representation of AppointmentData. Contains description
+     * and duration.
+     *
+     * @return AppointmentData text.
      */
-    default Duration duration() {
-        return appointmentData().duration();
-    }
+    @Override
+    String toString();
 }

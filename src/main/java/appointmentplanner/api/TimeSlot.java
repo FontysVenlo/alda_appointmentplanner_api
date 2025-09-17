@@ -1,8 +1,6 @@
 package appointmentplanner.api;
 
 import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -12,8 +10,8 @@ import java.time.LocalTime;
  * following and is the start thereof. In mathematics such notation is called a
  * half open range.
  *
- * The implementer should implement a proper to string showing start instant,
- * end instant and duration of this slot.
+ * The implementer should implement a proper to string showing start time (localTime),
+ * end time (LocalTime) and duration of this slot.
  * 
  * The time slots are comparable by length of the slot only!
  * If you keep the slots in a linked list there is no need to compare them
@@ -26,30 +24,28 @@ import java.time.LocalTime;
 public interface TimeSlot extends Comparable<TimeSlot> {
 
     /**
-     * Get the start of the TimeSlot. The start time is included in the
-     * range.
+     * Get start time of this time slot.
      *
-     * @return the start time
+     * @return start Time.
      */
-    Instant start();
-
+    LocalTime startTime();
+    
     /**
-     * Get the end of the TimeSlot. The end time is NOT included in the
-     * range.
+     * Get end time of this time slot.
      *
-     * @return the end time
+     * @return end Time.
      */
-    Instant end();
-
+    LocalTime endTime();
+    
     /**
      * Get the duration of this slot.
-     * The duration may be equal to "Duration.ZERO", typically used in sentinel
+     * The duration may be equal to "Duration.ZERO" if used in sentinel
      * values of TimeSlot.
      *
      * @return the duration as Duration
      */
     default Duration duration() {
-        return Duration.between(start(), end());
+        return Duration.between(startTime(), endTime());
     }
 
     /**
@@ -77,58 +73,17 @@ public interface TimeSlot extends Comparable<TimeSlot> {
     /**
      * Does the given time slot fit inside this time slot.
      *
-     * @param other Timeslot to test
-     * @return true if other does not start earlier nor ends earlier than this
-     *         time slot.
+     * @param other TimeSlot to test
+     * @return true if other does not start earlier nor ends later than this time slot.
      */
     default boolean fits(TimeSlot other) {
-        return this.start().compareTo(other.start()) <= 0
-                && this.end().compareTo(other.end()) >= 0;
-    }
-
-    /**
-     * Get End Time of the appointment in the given time zone.
-     *
-     * @param day for the time
-     * @return end Time.
-     */
-    default LocalTime endTime(LocalDay day) {
-        return day.timeOfInstant(end());
-    }
-
-    /**
-     * Get Start Time of the appointment in given time zone.
-     *
-     * @param day for the time
-     * @return start Time
-     */
-    default LocalTime startTime(LocalDay day) {
-        return day.timeOfInstant(start());
-    }
-
-    /**
-     * Return the date of the start of the TimeSlot.
-     *
-     * @param day provides time zone
-     * @return the date on which the TimeSlot starts.
-     */
-    default LocalDate startDate(LocalDay day) {
-        return day.dateOfInstant(start());
-    }
-
-    /**
-     * Return the date of the end of the TimeSlot.
-     *
-     * @param day provides time zone
-     * @return the date on which the TimeSlot ends.
-     */
-    default LocalDate endDate(LocalDay day) {
-        return day.dateOfInstant(end());
+        return this.startTime().compareTo(other.startTime()) <= 0
+                && this.endTime().compareTo(other.endTime()) >= 0;
     }
     
     /**
-     * Describes the TimeSlot in UTC.
-     * Start and end times are displayed in UTC. 
+     * Describes the TimeSlot.
+     * Start and end times are displayed as in "08:30-10:00". 
      * @return String describing the TimeSlot.
      */
     @Override

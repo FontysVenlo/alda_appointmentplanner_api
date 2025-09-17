@@ -1,8 +1,9 @@
 package appointmentplanner.api;
 
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 /**
  * This is the interface that the user (the teachers) of your implementation use
@@ -10,74 +11,37 @@ import java.time.LocalTime;
  */
 public interface AbstractAPFactory {
 
-    /**
-     * Factory method to create a day plan instance.
-     *
-     * @param day local day of this plan
-     * @param startTime earliest time in plan
-     * @param endTime no appointments end after this time
-     * @return LocalDayPlan object.
-     */
-    default LocalDayPlan createLocalDayPlan(LocalDay day, LocalTime startTime, LocalTime endTime) {
-        return createLocalDayPlan(day, day.ofLocalTime(startTime), day.ofLocalTime(endTime));
-    }
-
-    /**
-     * Factory method to create a day plan instance.
-     *
-     * @param day local day of this plan
-     * @param start earliest time in plan
-     * @param end no appointments end after this time
-     * @return LocalDayPlan object.
-     */
-    LocalDayPlan createLocalDayPlan(LocalDay day, Instant start, Instant end);
-
+    AppointmentPlanner createAppointmentPlanner();
+ 
+    Calendar createCalendar(String owner);
+    
+    ZonedDayPlan createZonedDayPlan(
+            ZoneId zoneId, 
+            LocalDate localDate, 
+            LocalTime startTime, 
+            LocalTime endTime);
 
     /**
      * Factory method to create an AppointmentData object without specified
      * startTime. The start time will be set (in an Appointment) as soon as the
      * appointment is added to the Day schedule.
      *
-     * @param description of the appointment
-     * @param duration of the appointment
-     * @return AppointmentData object.
+     * @param localDate
+     * @param zoneId
+     * @param startTime
+     * @param durationInMinutes
+     * @param timePreference
+     * @param description
+     * @param calendars
+     * @return 
      * @throws NullPointerException if any of the parameters are null
      */
-    AppointmentData createAppointmentData(String description,
-            Duration duration);
-
-    /**
-     * Create an appointmentRequest with a required start time.
-     *
-     * @param data of the request
-     * @param startTime time of the request
-     * @return the request.
-     */
-    default AppointmentRequest createAppointmentRequest(AppointmentData data, LocalTime startTime) {
-        return createAppointmentRequest(data, startTime, TimePreference.UNSPECIFIED);
-    }
-
-    /**
-     * Create a request with time preference.
-     *
-     * @param appData for this request
-     * @param preference for time, early or late
-     * @return the request
-     */
-    default AppointmentRequest createAppointmentRequest(AppointmentData appData, TimePreference preference) {
-        return createAppointmentRequest(appData, null, preference);
-    }
-
-    /**
-     * Create a request with a preferred start time and a fallback time
-     * preference.
-     *
-     * @param appointmentData data of the request
-     * @param preferredStart preferred start time
-     * @param fallBack when time not available, use fallback TimePreference
-     * @return the request
-     */
-    AppointmentRequest createAppointmentRequest(AppointmentData appointmentData,
-                                                LocalTime preferredStart,
-                                                TimePreference fallBack);
+    AppointmentRequest createAppointmentRequest(
+            LocalDate localDate,
+            ZoneId zoneId, 
+            LocalTime startTime, 
+            Duration durationInMinutes, 
+            TimePreference timePreference, 
+            String description,
+            String... calendars);
 }

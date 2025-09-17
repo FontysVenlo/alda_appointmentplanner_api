@@ -16,13 +16,14 @@ package appointmentplanner.api;
  * An appointment holds an AppointmentRequest and a start Instant.
  */
 public interface Appointment extends TimeSlot {
-
+    
+    
     /**
-     * Get the request that led to this appointment.
+     * Get the appointment details of this appointment.
      *
-     * @return the request.
+     * @return the data
      */
-    AppointmentRequest request();
+    AppointmentRequest appointmentRequest();
 
     /**
      * Override the default toString. toString() returns startTime, endTime and description
