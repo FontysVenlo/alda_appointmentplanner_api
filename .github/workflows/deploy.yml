@@ -1,9 +1,12 @@
-name: Java CI with Maven
+name: Publish package to the Maven Central Repository
 
 on:
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [created]
 
 jobs:
-  build:
-    uses: FontysVenlo/alda_api_workflows/.github/workflows/pullrequest.yml@main
+  deploy:
+    uses: FontysVenlo/alda_api_workflows/.github/workflows/deploy.yml@main
+    secrets: inherit
+    with:
+      tag: ${{ github.event.release.tag_name }}
