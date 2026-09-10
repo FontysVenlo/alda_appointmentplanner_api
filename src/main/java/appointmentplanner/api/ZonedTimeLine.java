@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public interface ZonedDayPlan {
+public interface ZonedTimeLine {
 
-    ZoneId zoneId();
+    ZoneId zoneIdOfTimeLine();
     
     LocalDate localDate();
-
-    ZonedDayPlan convertToZoneId(ZoneId otherZoneId);
 
     Optional<Appointment> addAppointment(AppointmentRequest request);
 
@@ -33,5 +31,8 @@ public interface ZonedDayPlan {
      * @return list of matching appointments.
      */
     List<Appointment> findAppointments(Predicate<Appointment> filter);
+    
+    @Override
+    String toString();
 
 }

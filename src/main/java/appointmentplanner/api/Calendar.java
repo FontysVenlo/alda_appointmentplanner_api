@@ -10,9 +10,9 @@ public interface Calendar {
     
     String owner();
     
-    void addZonedDayPlan(ZonedDayPlan zonedDayPlan);
+    void addZonedDayPlan(ZonedTimeLine zonedDayPlan);
     
-    Optional<ZonedDayPlan> getZonedDayPlanOn(LocalDate date);
+    Optional<ZonedTimeLine> getZonedDayPlanOn(LocalDate date);
     
     Optional<Appointment> addAppointment(AppointmentRequest request);
     
@@ -21,6 +21,9 @@ public interface Calendar {
     List<AppointmentRequest> removeAppointments(Predicate<Appointment> filter);
     
     List<Appointment> findAppointments(Predicate<Appointment> filter);
+    
+    @Override
+    String toString();
     
     // TODO Remove methodes toevoegen
     

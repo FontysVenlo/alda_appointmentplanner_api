@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Timezone and day based view on timeline. This is the classic view on a day
@@ -92,17 +93,13 @@ public interface TimeLine extends TimeSlot {
     String toString();
 
     /**
-     * Check if day contains the given appointment.
-     *
-     * @param appointment to search for.
-     * @return true if the Appointment is part of the planning, false otherwise.
-     */
-    boolean contains(Appointment appointment);
-
-    /**
      * Returns the number of appointments on a day.
      *
      * @return Number of appointments on this plan.
      */
     int nrOfAppointments();
+    
+    boolean contains(Appointment appointment);
+    
+    public Stream<Appointment> appointmentStream();
 }

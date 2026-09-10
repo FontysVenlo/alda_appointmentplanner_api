@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 public interface AppointmentPlanner {
 
     void addCalendar(Calendar calendar);
+    
+    Calendar getCalendar(String owner);
 
     Optional<Appointment> addAppointment(AppointmentRequest request);
     

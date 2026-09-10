@@ -15,10 +15,14 @@ public interface AbstractAPFactory {
  
     Calendar createCalendar(String owner);
     
-    ZonedDayPlan createZonedDayPlan(
+    ZonedTimeLine createZonedDayPlan(
             ZoneId zoneId, 
             LocalDate localDate, 
             LocalTime startTime, 
+            LocalTime endTime);
+    
+    TimeLine createTimeLine(
+            LocalTime startTime,
             LocalTime endTime);
 
     /**
