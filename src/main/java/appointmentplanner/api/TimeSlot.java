@@ -81,6 +81,18 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @return true if other does not start earlier nor ends earlier than this
      *         time slot.
      */
+    /**
+     * Does this slot contain the given instant? The slot is half open, so the
+     * start is inside and the end is not. Two adjacent slots therefore never
+     * both contain the instant where they meet.
+     *
+     * @param instant the instant to test.
+     * @return true when start &lt;= instant &lt; end.
+     */
+    default boolean contains(Instant instant) {
+        return start().compareTo(instant) <= 0 && instant.compareTo(end()) < 0;
+    }
+
     default boolean fits(TimeSlot other) {
         return this.start().compareTo(other.start()) <= 0
                 && this.end().compareTo(other.end()) >= 0;

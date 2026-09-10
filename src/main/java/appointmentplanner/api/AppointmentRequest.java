@@ -3,6 +3,7 @@ package appointmentplanner.api;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Class holding the full details of an appointment request.
@@ -71,5 +72,42 @@ public interface AppointmentRequest {
      */
     default Duration duration() {
         return appointmentData().duration();
+    }
+
+    /**
+     * What the appointment is for.
+     *
+     * @return the description, never null or empty.
+     */
+    default String description() {
+        return appointmentData().description();
+    }
+
+    /**
+     * The period to search when planning this request. A continuous timeline
+     * has no end, so a search has to be bounded, and this is that bound.
+     *
+     * <p>
+     * The horizon also subsumes what used to need dedicated time preferences:
+     * "earliest after 14:00" is EARLIEST within a horizon starting at 14:00,
+     * and "latest before 16:00" is LATEST within a horizon ending at 16:00.
+     *
+     * @return the horizon, or null for a request built through the day-plan
+     * API that is on its way out.
+     */
+    default TimeSlot horizon() {
+        return null;
+    }
+
+    /**
+     * Names of the calendars that must all attend. A request naming several
+     * owners is only satisfiable in a period that is free and available in
+     * every one of them.
+     *
+     * @return the calendar owners, empty for a request built through the
+     * day-plan API that is on its way out.
+     */
+    default List<String> calendars() {
+        return List.of();
     }
 }

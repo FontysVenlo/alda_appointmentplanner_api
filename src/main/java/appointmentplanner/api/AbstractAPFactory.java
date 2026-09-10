@@ -147,4 +147,26 @@ public interface AbstractAPFactory {
      * @throws IllegalArgumentException if owner is blank.
      */
     Calendar createCalendar(String owner, Availability availability);
+
+    /**
+     * Create the planner that plans across calendars.
+     *
+     * @return a planner holding no calendars.
+     */
+    AppointmentPlanner createAppointmentPlanner();
+
+    /**
+     * Create a request for the continuous-calendar API.
+     *
+     * @param description what the appointment is for.
+     * @param duration how long it takes.
+     * @param preference which of the possible periods to choose.
+     * @param horizon the period to search within.
+     * @param calendars owners of every calendar that must attend.
+     * @return the request.
+     * @throws NullPointerException if any argument is null.
+     * @throws IllegalArgumentException if calendars is empty.
+     */
+    AppointmentRequest createAppointmentRequest(String description, Duration duration,
+            TimePreference preference, TimeSlot horizon, List<String> calendars);
 }
