@@ -2,8 +2,6 @@ package appointmentplanner.api;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * A time slot represents an (un)allocated range of time defined as
@@ -104,44 +102,11 @@ public interface TimeSlot extends Comparable<TimeSlot> {
      * @param day for the time
      * @return end Time.
      */
-    default LocalTime endTime(LocalDay day) {
-        return day.timeOfInstant(end());
-    }
 
     /**
-     * Get Start Time of the appointment in given time zone.
+     * Human readable rendering, for example {@code 09:00-10:30}.
      *
-     * @param day for the time
-     * @return start Time
-     */
-    default LocalTime startTime(LocalDay day) {
-        return day.timeOfInstant(start());
-    }
-
-    /**
-     * Return the date of the start of the TimeSlot.
-     *
-     * @param day provides time zone
-     * @return the date on which the TimeSlot starts.
-     */
-    default LocalDate startDate(LocalDay day) {
-        return day.dateOfInstant(start());
-    }
-
-    /**
-     * Return the date of the end of the TimeSlot.
-     *
-     * @param day provides time zone
-     * @return the date on which the TimeSlot ends.
-     */
-    default LocalDate endDate(LocalDay day) {
-        return day.dateOfInstant(end());
-    }
-    
-    /**
-     * Describes the TimeSlot in UTC.
-     * Start and end times are displayed in UTC. 
-     * @return String describing the TimeSlot.
+     * @return this slot as text.
      */
     @Override
     String toString();

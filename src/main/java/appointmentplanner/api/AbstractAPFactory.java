@@ -17,83 +17,6 @@ import java.util.Set;
 public interface AbstractAPFactory {
 
     /**
-     * Factory method to create a day plan instance.
-     *
-     * @param day local day of this plan
-     * @param startTime earliest time in plan
-     * @param endTime no appointments end after this time
-     * @return LocalDayPlan object.
-     */
-    default LocalDayPlan createLocalDayPlan(LocalDay day, LocalTime startTime, LocalTime endTime) {
-        return createLocalDayPlan(day, day.ofLocalTime(startTime), day.ofLocalTime(endTime));
-    }
-
-    /**
-     * Factory method to create a day plan instance.
-     *
-     * @param day local day of this plan
-     * @param start earliest time in plan
-     * @param end no appointments end after this time
-     * @return LocalDayPlan object.
-     */
-    LocalDayPlan createLocalDayPlan(LocalDay day, Instant start, Instant end);
-
-
-    /**
-     * Factory method to create an AppointmentData object without specified
-     * startTime. The start time will be set (in an Appointment) as soon as the
-     * appointment is added to the Day schedule.
-     *
-     * @param description of the appointment
-     * @param duration of the appointment
-     * @return AppointmentData object.
-     * @throws NullPointerException if any of the parameters are null
-     */
-    AppointmentData createAppointmentData(String description,
-            Duration duration);
-
-    /**
-     * Create an appointmentRequest with a required start time.
-     *
-     * @param data of the request
-     * @param startTime time of the request
-     * @return the request.
-     */
-    default AppointmentRequest createAppointmentRequest(AppointmentData data, LocalTime startTime) {
-        return createAppointmentRequest(data, startTime, TimePreference.UNSPECIFIED);
-    }
-
-    /**
-     * Create a request with time preference.
-     *
-     * @param appData for this request
-     * @param preference for time, early or late
-     * @return the request
-     */
-    default AppointmentRequest createAppointmentRequest(AppointmentData appData, TimePreference preference) {
-        return createAppointmentRequest(appData, null, preference);
-    }
-
-    /**
-     * Create a request with a preferred start time and a fallback time
-     * preference.
-     *
-     * @param appointmentData data of the request
-     * @param preferredStart preferred start time
-     * @param fallBack when time not available, use fallback TimePreference
-     * @return the request
-     */
-    AppointmentRequest createAppointmentRequest(AppointmentData appointmentData,
-                                                LocalTime preferredStart,
-                                                TimePreference fallBack);
-
-    // ---------------------------------------------------------------------
-    // Continuous-calendar API (3.0.0). The LocalDay/LocalDayPlan factory
-    // methods above are retained only until the teacher tests are ported,
-    // and are removed before 3.0.0 is published.
-    // ---------------------------------------------------------------------
-
-    /**
      * Create availability from recurring wall-clock windows per weekday.
      *
      * @param zone the zone the windows are read in.
@@ -169,4 +92,16 @@ public interface AbstractAPFactory {
      */
     AppointmentRequest createAppointmentRequest(String description, Duration duration,
             TimePreference preference, TimeSlot horizon, List<String> calendars);
+
+    /**
+     * Create a period in absolute time, used above all to express the horizon
+     * a request is searched in.
+     *
+     * @param from start of the period, inclusive.
+     * @param to end of the period, exclusive; must be after from.
+     * @return the period.
+     * @throws NullPointerException if any argument is null.
+     * @throws IllegalArgumentException if to is not after from.
+     */
+    TimeSlot createTimeSlot(Instant from, Instant to);
 }
